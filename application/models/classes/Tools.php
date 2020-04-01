@@ -98,10 +98,16 @@ class Tools {
     {
 
         $menu = array();
-        $menu['addcase']['root'] = array("title" => "Add Case", "url" => SITEURL . "dashboard/", "icon" => "dashboard", "visible" => true);
+        $menu['addcase']['root'] = array("title" => "Add Case", "url" => SITEURL . "addcase/", "icon" => "dashboard", "visible" => true);
         $menu['viewcasereport']['root'] = array("title" => "View Case Report", "url" => SITEURL . "profile/", "icon" => "user", "visible" => true);
-        $menu['setting']['root'] = array("title" => "Settings", "url" => SITEURL . "messages/", "icon" => "user", "visible" => true);
-       // $menu['logout']['root'] = array("title" => "logout", "url" => SITEURL . "logout/", "icon" => "dashboard", "visible" => true);
+        $menu['setting']['root'] = array("title" => "Settings", "url" => "#", "icon" => "user", "visible" => true);
+        $menu['setting']['law'] = array("title" => "LAW", "url" => SITEURL . "law/", "icon" => "user", "visible" => true);
+        $menu['setting']['section'] = array("title" => "Section", "url" => SITEURL . "section/", "icon" => "user", "visible" => true);
+        $menu['setting']['nature'] = array("title" => "Nature", "url" => SITEURL . "nature/", "icon" => "user", "visible" => true);
+        //$menu['setting']['subsubsection'] = array("title" => "Sub Sub Section", "url" => SITEURL . "messages/", "icon" => "user", "visible" => true);
+
+
+        // $menu['logout']['root'] = array("title" => "logout", "url" => SITEURL . "logout/", "icon" => "dashboard", "visible" => true);
         return $menu;
     }
   
