@@ -93,7 +93,17 @@ class Tools {
         }
         return $anyVal;
     }
-    
+
+    public static function menuArray()
+    {
+
+        $menu = array();
+        $menu['addcase']['root'] = array("title" => "Add Case", "url" => SITEURL . "dashboard/", "icon" => "dashboard", "visible" => true);
+        $menu['viewcasereport']['root'] = array("title" => "View Case Report", "url" => SITEURL . "profile/", "icon" => "user", "visible" => true);
+        $menu['setting']['root'] = array("title" => "Settings", "url" => SITEURL . "messages/", "icon" => "user", "visible" => true);
+       // $menu['logout']['root'] = array("title" => "logout", "url" => SITEURL . "logout/", "icon" => "dashboard", "visible" => true);
+        return $menu;
+    }
   
     
 }

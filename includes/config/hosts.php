@@ -14,15 +14,15 @@ else {
 }
 define("SITEACTIVE", true); 
 define('HOSTNAME','localhost');
-define('DBNAME','tamin'); 
+define('DBNAME','spark');
 define('DBUSER','root');
-define('DBPASS','root');
+define('DBPASS','');
 define("OCSALT","hTu94Djag");
 define('DBPREFIX', '');
 define("PROTOCOL", "http");
 define("HTTP", PROTOCOL);
 define("TLD", "");
-define("SITEHOST", "localhost:8888/brainbeens/vahana");
+define("SITEHOST", "localhost/spark");
 define("SITEROOT",PROTOCOL."://".SITEHOST.".".TLD."/");
 define('SITEURL', PROTOCOL."://".SITEHOST."/");
 define('URLSIMPLE',SITEHOST.'.'.TLD);
