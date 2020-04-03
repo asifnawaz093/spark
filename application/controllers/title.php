@@ -1,5 +1,5 @@
 <?php
-class nature implements IController {
+class title implements IController {
     public function main()
     {
         /////
@@ -24,35 +24,35 @@ class nature implements IController {
                 "name:asc" 	=> "Name (A-Z)",
                 "name:desc" => "Name (Z-A)",
             ),
-            "pagination"	=> array("pageLink"=>SITEURL."nature/")
+            "pagination"	=> array("pageLink"=>SITEURL."title/")
         );
-        $filter->select     = "SELECT * FROM nature";
+        $filter->select     = "SELECT * FROM title";
         $filter->order 			= "order by id desc";
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
         $rows 					= $db->getRows($query);
         $builder					= FC::getClass("Builder");
-        $builder->table				= "nature";
+        $builder->table				= "title";
         if(Tools::isSubmit("multi_delete")){
             $multi_ids = Tools::getArray("multi");
             if(count($multi_ids) > 0){
                 $builder->multiDelete($multi_ids);
             }else{
-                $fc->error = "Error. Please select nature you want to delete.";
+                $fc->error = "Error. Please select title you want to delete.";
                 Tools::redirect();
             }
         }
-        $builder->link 				= SITEURL."nature/?action=main";
-        $builder->log_title			= "nature: ";
-        $builder->links->view		= SITEURL."nature/?action=detail";
-        $builder->links->edit		= SITEURL . "nature/?action=add";
+        $builder->link 				= SITEURL."title/?action=main";
+        $builder->log_title			= "title: ";
+        $builder->links->view		= SITEURL."title/?action=detail";
+        $builder->links->edit		= SITEURL . "title/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "nature"=>"nature", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
+        $builder->columns 			=  array("id"=>"ID", "title"=>"title", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);
-        if(!$rows){$fc->error = "No record found. <a href='".SITEURL."nature/?action=add' class='btn btn-primary'>Add New Nature</a>"; }
-        $result 					= $view->render('../views/nature/list.php');
+        if(!$rows){$fc->error = "No case found. <a href='".SITEURL."title/?action=add' class='btn btn-primary'>Add New case</a>"; }
+        $result 					= $view->render('../views/title/list.php');
         $fc->setBody($result);
     }
     public function add() {
@@ -62,40 +62,34 @@ class nature implements IController {
         $session = FC::getClassInstance("Session");
         $session->session();
         $builder = FC::getClass("Builder");
-        $view->nature =false;
+        $view->title =false;
         if(Tools::isSubmit("edit") && Tools::getValue("id")){
             $id = Tools::getValue("id");
-            $view->nature = $db->getRow("SELECT * FROM nature WHERE id = '$id'");
-            $nature_meta = $db->getNameValue("SELECT CONCAT('cm_',a.id) name ,b.value from custom_meta a LEFT JOIN nature_meta b ON a.id = b.id_meta WHERE b.id_nature = '$id'","name","value");
-            if($nature_meta) $view->nature = array_merge($view->nature, $nature_meta);
+            $view->title = $db->getRow("SELECT * FROM title WHERE id = '$id'");
+            $title_meta = $db->getNameValue("SELECT CONCAT('cm_',a.id) name ,b.value from custom_meta a LEFT JOIN title_meta b ON a.id = b.id_meta WHERE b.id_title = '$id'","name","value");
+            if($title_meta) $view->title = array_merge($view->title, $title_meta);
         }
-        $custom_meta = $db->getRows("SELECT * FROM custom_meta WHERE form='nature'");
+        $custom_meta = $db->getRows("SELECT * FROM custom_meta WHERE form='title'");
         if(Tools::isSubmit("submit") ){
             $data=[];
-            $data['nature'] = Tools::getValue("nature");
+            $data['title'] = Tools::getValue("title");
             $data['id_law']=Tools::getValue('id_law');
-
             if(Tools::isSubmit("edit")){
-                if($db->update(array("nature"=>$data), "WHERE id = '$id'",false)){
-                    $fc->success = "nature information updated successfully";
-                    FC::getClass("Log")->add("nature ID: $id updated");
+                if($db->update(array("title"=>$data), "WHERE id = '$id'",false)){
+                    $fc->success = "title information updated successfully";
+                    FC::getClass("Log")->add("title ID: $id updated");
                 }else{
                     $fc->error = "Some error occured.";
                 }
             }else{
-                if($id = $db->insert(array("nature"=>$data))){
-                    $fc->success = "New nature created successfully"; FC::getClass("Log")->add("New nature information created. nature ID: $id");
+                if($id = $db->insert(array("title"=>$data))){
+                    $fc->success = "New title created successfully"; FC::getClass("Log")->add("New title information created. title ID: $id");
                 }else{
                     $fc->error = "Some error occured.";
                 }
             }
-            FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"nature_meta","id_nature");
+            FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"title_meta","id_title");
             // Tools::redirect();
-        }
-        $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
-        $lawdrop=[];
-        foreach($getlaw as $law){
-            $lawdrop[$law['id']]=$law['law'];
         }
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];
@@ -104,13 +98,13 @@ class nature implements IController {
         }
         $builder->form_attribute = "enctype='multipart/form-data'";
         $builder->form_fields = array(
-            ["name"=>"id_law", "label"=>"LAW", "type"=>"select","options"=>$lawdrop,],
-            ["name"=>"nature", "label"=>"Nature"],
-        );
+            ["name"=>"id_law", "label"=>"LAW", "type"=>"select","options"=>$lawdrop],
+            ["name"=>"title", "label"=>"Title"],
+            );
         $builder->form_fields = array_merge($builder->form_fields, FC::getClass("Settings")->getCustomFormFields($custom_meta));
-        $view->form = $builder->addForm(false, $view->nature);
-        $view->page_title = "Add New nature";
-        $result = $view->render('../views/nature/add.php');
+        $view->form = $builder->addForm(false, $view->title);
+        $view->page_title = "Add New Title";
+        $result = $view->render('../views/title/add.php');
         $fc->setBody($result);
     }
     public function detail() {
@@ -121,17 +115,16 @@ class nature implements IController {
         $session->session();
         $id = Tools::getValue("id");
         if($id){
-            $view->nature = $q=$db->getRow("SELECT * FROM nature WHERE id = '$id'");
-            $view->law=$db->getRow("SELECT `law` FROM `law` WHERE `id`='$q[id_law]'");
-
-            if(!$view->nature){$fc->error = "No information available. ";}
+            $view->title = $db->getRow("SELECT * FROM title WHERE id = '$id'");
+            $view->law=getlawname($view->title['id']);
+            if(!$view->title){$fc->error = "No information available. ";}
             else{
-                $view->nature['meta'] = FC::getClass("Settings")->getCustomMeta("nature_meta","id_nature",$id);
+                $view->title['meta'] = FC::getClass("Settings")->getCustomMeta("title_meta","id_title",$id);
             }
         }else{
             $fc->error= "invalid parameter";
         }
-        $result = $view->render('../views/nature/detail.php');
+        $result = $view->render('../views/title/detail.php');
         $fc->setBody($result);
     }
 }

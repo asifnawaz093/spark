@@ -5,7 +5,7 @@ class index implements IController {
         $fc = FC::getInstance();
         $session = FC::getClass("Session");
         $db = FC::getClass("Db");
-        Tools::redirect("dashboard");
+        Tools::redirect("addcase");
 		$result = $view->render('../views/index.php');
         $fc = FC::getInstance();
         $fc->setBody($result);

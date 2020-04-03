@@ -73,10 +73,6 @@ $session = FC::getClassInstance("Session"); ?>
             }
             echo "</li>";
         }
-        echo "<li><a id='element_$i' class='menu-link' href='".SITEURL."privillages/'>Permissions</a></li>";
-        $i++;
-        echo "<li><a id='element_$i' class='menu-link' href='".SITEURL."profilesettings'>Change Password</a></li>";
-        $i++;
         echo "<li><a id='element_$i' class='menu-link' href='".SITEURL."logout/'>Logout</a></li>";
 
         }

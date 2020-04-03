@@ -49,7 +49,7 @@ class addcase implements IController {
         $builder->links->edit		= SITEURL . "addcase/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_section"=>["label"=>"Section", "function"=>"getsectionname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"details"=>"Details");
+        $builder->columns 			=  array("id"=>"ID", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_title"=>["label"=>"Title", "function"=>"gettitlename"],"id_section"=>["label"=>"Section", "function"=>"getsectionname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"id_result"=>["label"=>"Result", "function"=>"getresultname"],"details"=>"Details", "date_added"=>["label"=>"Date", "function"=>"dateformat"]);
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No record found. <a href='".SITEURL."addcase/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/addcase/list.php');
@@ -74,9 +74,10 @@ class addcase implements IController {
             $data=[];
             $data['details'] = Tools::getValue("details");
             $data['id_law']=Tools::getValue('id_law');
+            $data['id_title']=Tools::getValue('id_title');
             $data['id_section']=Tools::getValue('id_section');
-                 $data['id_nature']=Tools::getValue('id_nature');
-
+            $data['id_nature']=Tools::getValue('id_nature');
+            $data['id_result']=Tools::getValue('id_result');
             if(Tools::isSubmit("edit")){
                 if($db->update(array("addcase"=>$data), "WHERE id = '$id'",false)){
                     $fc->success = "addcase information updated successfully";
@@ -106,9 +107,11 @@ class addcase implements IController {
         }
         $builder->form_attribute = "enctype='multipart/form-data'";
         $builder->form_fields = array(
-            ["name"=>"id_law", "label"=>"LAW", "type"=>"select","options"=>$lawdrop, "attributes" => "onchange='getsection()' required"],
-            ["name" => "id_section", "id" => "id_section", "label" => "Section", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"onchange='getnaturelist()' required"],
-            ["name"=>"id_nature", "label"=>"Nature","type" => "select", "options" => [],"attributes" => "multipel=true", "class='form-control nodidsplay'", "attributes" =>"required"],
+            ["name"=>"id_law", "label"=>"LAW", "type"=>"select","options"=>$lawdrop, "attributes" => "onchange='getdata()' required"],
+            ["name" => "id_title", "id" => "id_title", "label" => "Title", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"required"],
+            ["name" => "id_section", "id" => "id_section", "label" => "Section", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"required"],
+            ["name"=>"id_nature", "label"=>"Nature","type" => "select", "options" => [],"attributes" => "multipel=true", "class='form-control nodidsplay'", "attributes" =>"onchange='getresultlist()' required"],
+            ["name" => "id_result", "id" => "id_result", "label" => "Result", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"required"],
             ["name"=>"details", "label"=>"Details", "type"=>"textarea"],
         );
         $builder->form_fields = array_merge($builder->form_fields, FC::getClass("Settings")->getCustomFormFields($custom_meta));
@@ -125,10 +128,12 @@ class addcase implements IController {
         $session->session();
         $id = Tools::getValue("id");
         if($id){
-            $view->addcase = $db->getRow("SELECT * FROM addcase WHERE id = '$id'");
-            $view->law=getlawname($view->addcase['id_law']);
-            $view->section=getsectionname($view->addcase['id_section']);
-            $view->nature=getnaturename($view->addcase['id_nature']);
+            $view->addcase =$q= $db->getRow("SELECT * FROM addcase WHERE id = '$id'");
+            $view->law=$db->getRow("SELECT `law` FROM `law` WHERE `id`='$q[id_law]'");
+            $view->title=$db->getRow("SELECT `title` FROM `title` WHERE `id`='$q[id_title]'");
+            $view->section=$db->getRow("SELECT `section` FROM `section` WHERE `id`='$q[id_section]'");
+            $view->nature=$db->getRow("SELECT `nature` FROM `nature` WHERE `id`='$q[id_nature]'");
+            $view->result=$db->getRow("SELECT `result` FROM `result` WHERE `id`='$q[id_result]'");
             if(!$view->addcase){$fc->error = "No information available. ";}
             else{
                 $view->addcase['meta'] = FC::getClass("Settings")->getCustomMeta("addcase_meta","id_addcase",$id);
@@ -139,19 +144,47 @@ class addcase implements IController {
         $result = $view->render('../views/addcase/detail.php');
         $fc->setBody($result);
     }
-    public function getsection()
+    public function getresultlist()
     {
         $db = FC::getClass("Db");
-        $value = Tools::getValue("value");
-
-        if($value) {
-            $data = $db->getNameValue("SELECT `id`,  `section` as 'name' FROM `section` WHERE `id_law`= '$value'","id","name");
+        $id_law = Tools::getValue("id_law");
+        $id_nature = Tools::getValue("id_nature");
+        if($id_law && $id_nature) {
+            $data = $db->getNameValue("SELECT `id`,  `result` as 'name' FROM `result` WHERE `id_law`= '$id_law' AND `id_nature`='$id_nature' ","id","name");
 
             if ($data) {
                 echo "<option value=''>Select one</option>";
                 foreach ($data as $id => $name) {
                     echo "<option value='{$id}'>$name</option>";
                 }
+            }else{
+                echo "<option>No Data</option>";
+            }
+        }
+    }
+    public function getdata()
+    {
+        $db = FC::getClass("Db");
+        $value = Tools::getValue("value");
+        $param=Tools::getValue('param');
+
+        if($value) {
+            if($param==1){
+                $data = $db->getNameValue("SELECT `id`,  `title` as 'name' FROM `title` WHERE `id_law`= '$value'","id","name");
+            }
+            else if($param==2){
+                    $data = $db->getNameValue("SELECT `id`,  `section` as 'name' FROM `section` WHERE `id_law`= '$value'","id","name");
+                }else if($param==3){
+                $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_law`= '$value'","id","name");
+            }
+
+            if ($data) {
+                echo "<option value=''>Select one</option>";
+                foreach ($data as $id => $name) {
+                    echo "<option value='{$id}'>$name</option>";
+                }
+            }else{
+                echo "<option>No Data</option>";
             }
         }
     }
@@ -160,7 +193,7 @@ class addcase implements IController {
         $db = FC::getClass("Db");
         $value = Tools::getValue("value");
         if($value) {
-            $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_section`= '$value'","id","name");
+            $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_law`= '$value'","id","name");
 
             if ($data) {
                 echo "<option value=''>Select one</option>";
@@ -177,6 +210,12 @@ function getlawname($law_id)
     $name=$db->getValue("SELECT `law` FROM `law` WHERE `id`='$law_id'");
     return $name;
 }
+function gettitlename($title_id)
+{
+    $db = FC::getClassInstance("Db");
+    $name=$db->getValue("SELECT `title` FROM `title` WHERE `id`='$title_id'");
+    return $name;
+}
 function getsectionname($section_id)
 {
     $db = FC::getClassInstance("Db");
@@ -188,5 +227,15 @@ function getnaturename($nature_id)
     $db = FC::getClassInstance("Db");
     $name=$db->getValue("SELECT `nature` FROM `nature` WHERE `id`='$nature_id'");
     return $name;
+}
+function getresultname($result_id)
+{
+    $db = FC::getClassInstance("Db");
+    $name=$db->getValue("SELECT `result` FROM `result` WHERE `id`='$result_id'");
+    return $name;
+}
+function dateformat($date){
+    $newdate=date("j-M-y", strtotime($date));
+    return $newdate;
 }
 

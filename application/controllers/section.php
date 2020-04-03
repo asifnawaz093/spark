@@ -115,8 +115,9 @@ class section implements IController {
         $session->session();
         $id = Tools::getValue("id");
         if($id){
-            $view->section = $db->getRow("SELECT * FROM section WHERE id = '$id'");
-            $view->law=getlawname($view->section['id']);
+            $view->section=$q = $db->getRow("SELECT * FROM section WHERE id = '$id'");
+           // $view->law=getlawname($view->section['id_law']);
+            $view->law=$db->getRow("SELECT `law` FROM `law` WHERE `id`='$q[id_law]'");
             if(!$view->section){$fc->error = "No information available. ";}
             else{
                 $view->section['meta'] = FC::getClass("Settings")->getCustomMeta("section_meta","id_section",$id);

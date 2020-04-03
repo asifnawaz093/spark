@@ -98,19 +98,22 @@ class Tools {
     {
 
         $menu = array();
-        $menu['addcase']['root'] = array("title" => "Add Case", "url" => SITEURL . "addcase/", "icon" => "dashboard", "visible" => true);
-        $menu['viewcasereport']['root'] = array("title" => "View Case Report", "url" => SITEURL . "profile/", "icon" => "user", "visible" => true);
+        $menu['addcase']['root'] = array("title" => "Add Case Report", "url" => SITEURL . "addcase/?action=add", "icon" => "dashboard", "visible" => true);
+        $menu['viewcasereport']['root'] = array("title" => "View Case Report", "url" => SITEURL . "addcase/", "icon" => "user", "visible" => true);
         $menu['setting']['root'] = array("title" => "Settings", "url" => "#", "icon" => "user", "visible" => true);
-        $menu['setting']['law'] = array("title" => "LAW", "url" => SITEURL . "law/", "icon" => "user", "visible" => true);
-        $menu['setting']['section'] = array("title" => "Section", "url" => SITEURL . "section/", "icon" => "user", "visible" => true);
-        $menu['setting']['nature'] = array("title" => "Nature", "url" => SITEURL . "nature/", "icon" => "user", "visible" => true);
-        //$menu['setting']['subsubsection'] = array("title" => "Sub Sub Section", "url" => SITEURL . "messages/", "icon" => "user", "visible" => true);
-
-
+        $menu['setting']['addlaw'] = array("title" => "Add LAW", "url" => SITEURL . "law/?action=add", "icon" => "user", "visible" => true);
+        $menu['setting']['law'] = array("title" => "View LAW", "url" => SITEURL . "law/", "icon" => "user", "visible" => true);
+        $menu['setting']['addtitle'] = array("title" => "Add Title", "url" => SITEURL . "title/?action=add", "icon" => "user", "visible" => true);
+        $menu['setting']['title'] = array("title" => "View Title", "url" => SITEURL . "title/", "icon" => "user", "visible" => true);
+        $menu['setting']['addsection'] = array("title" => "Add Section", "url" => SITEURL . "section/?action=add", "icon" => "user", "visible" => true);
+        $menu['setting']['section'] = array("title" => "View Section", "url" => SITEURL . "section/", "icon" => "user", "visible" => true);
+        $menu['setting']['addnature'] = array("title" => "Add Nature", "url" => SITEURL . "nature/?action=add", "icon" => "user", "visible" => true);
+        $menu['setting']['nature'] = array("title" => "View Nature", "url" => SITEURL . "nature/", "icon" => "user", "visible" => true);
+        $menu['setting']['addresult'] = array("title" => "Add Result", "url" => SITEURL . "result/?action=add", "icon" => "user", "visible" => true);
+        $menu['setting']['result'] = array("title" => "View Result", "url" => SITEURL . "result/", "icon" => "user", "visible" => true);
+        $menu['changep']['root'] = array("title" => "Change Password", "url" =>  SITEURL . "changep/", "icon" => "gear", "visible" => true);
         // $menu['logout']['root'] = array("title" => "logout", "url" => SITEURL . "logout/", "icon" => "dashboard", "visible" => true);
         return $menu;
     }
-  
-    
 }
 ?>

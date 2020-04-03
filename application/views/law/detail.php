@@ -17,7 +17,7 @@
 					<div class="col-md-9">
 						<table class="table table-bordered">
 							<tr><th>ID: </th><td><?php echo $this->law['id']; ?></td></tr>
-							<tr><th>LAW: </th><td><?php echo $this->law['law']; ?></td></tr>
+							<tr><th>LAW: </th><td><?php echo ucwords($this->law['law']); ?></td></tr>
                             <!--	<tr><th>Address: </th><td><?php echo $this->law['address']; ?></td></tr>
 							<tr><th>Phone Number: </th><td><?php echo $this->law['phone']; ?></td></tr> -->
 							<?php if(isset($this->law['meta']) && $this->law['meta']){
