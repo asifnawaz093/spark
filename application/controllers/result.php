@@ -51,7 +51,7 @@ class result implements IController {
         $builder->log_title			= "result: ";
         $builder->links->view		= SITEURL."result/?action=detail";
         $builder->links->edit		= SITEURL . "result/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["edit","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array( "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"result"=>"Result");
         $view->table 				= $builder->getTable($rows);

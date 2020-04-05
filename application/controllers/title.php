@@ -49,7 +49,7 @@ class title implements IController {
         $builder->log_title			= "title: ";
         $builder->links->view		= SITEURL."title/?action=detail";
         $builder->links->edit		= SITEURL . "title/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["edit","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array("title"=>"title", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);

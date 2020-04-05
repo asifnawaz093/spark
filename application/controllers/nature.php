@@ -49,7 +49,7 @@ class nature implements IController {
         $builder->log_title			= "nature: ";
         $builder->links->view		= SITEURL."nature/?action=detail";
         $builder->links->edit		= SITEURL . "nature/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["edit","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array("nature"=>"nature", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);

@@ -47,7 +47,7 @@ class law implements IController {
         $builder->log_title			= "law: ";
         $builder->links->view		= SITEURL."law/?action=detail";
         $builder->links->edit		= SITEURL . "law/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["edit","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array("law"=>"LAW",);
         $view->table 				= $builder->getTable($rows);

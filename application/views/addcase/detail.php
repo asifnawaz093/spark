@@ -31,9 +31,8 @@
                            <tr><th>Date Created: </th><td><?php echo Tools::printDate($this->addcase['date_added']); ?></td></tr>
 						</table>
                         <table class="table table-bordered">
-                            <tr><td align="center"><b>Details</b></td></tr>
-                            <tr><td><textarea style="width: 100%; height: 200px"><?php echo ucwords($this->addcase['details']); ?>
-                                    </textarea></td></tr>
+                            <tr><td><?php echo ucwords($this->addcase['details']); ?>
+                                    </td></tr>
                         </table>
 
 					</div>

@@ -49,7 +49,7 @@ class section implements IController {
         $builder->log_title			= "section: ";
         $builder->links->view		= SITEURL."section/?action=detail";
         $builder->links->edit		= SITEURL . "section/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["edit","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array( "section"=>"Section", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);
