@@ -119,7 +119,7 @@ class addcase implements IController {
             ["name" => "id_section", "id" => "id_section", "label" => "Section", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"required"],
             ["name"=>"id_nature", "label"=>"Nature","type" => "select", "options" => [],"attributes" => "multipel=true", "class='form-control nodidsplay'", "attributes" =>"onchange='getresultlist()' required"],
             ["name" => "id_result", "id" => "id_result", "label" => "Result", "type" => "select", "options" => [], "class='form-control nodidsplay'", "attributes"=>"required"],
-            ["name"=>"details", "label"=>"Details", "type"=>"textarea"],
+            ["name"=>"details", "label"=>"Details", "type"=>"textarea","attributes"=>"style='width:90%; height:200px;'", ],
         );
         $builder->form_fields = array_merge($builder->form_fields, FC::getClass("Settings")->getCustomFormFields($custom_meta));
         $view->form = $builder->addForm(false, $view->addcase);
