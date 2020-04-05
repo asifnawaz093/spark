@@ -14,10 +14,11 @@ class section implements IController {
         $page               = (isset($_GET['p']) && !empty($_GET['p'])) ? $_GET['p'] : 1;
         $filter->from       = ($page - 1) * $filter->num;
         $view->from	    = $filter->from + 1;
-        $filter->seachLabel = "ID, Name";
+        $filter->seachLabel = "Name";
+        $law = $db->getNameValue("SELECT `id`,`law` as 'name' FROM `law`");
         $filter->seperate_pagination = true;
         $filter->filters    = array(
-            "search"    => array("`id`","name"),
+            "search"    => array("section"),
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
                 "id:asc"     	=> "Oldest First",
@@ -28,6 +29,7 @@ class section implements IController {
         );
         $filter->select     = "SELECT * FROM section";
         $filter->order 			= "order by id desc";
+        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
@@ -49,7 +51,7 @@ class section implements IController {
         $builder->links->edit		= SITEURL . "section/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "section"=>"Section", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
+        $builder->columns 			=  array( "section"=>"Section", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No case found. <a href='".SITEURL."section/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/section/list.php');

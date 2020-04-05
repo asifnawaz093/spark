@@ -17,7 +17,6 @@
                 <div class="row">
 					<div class="col-md-9">
 						<table class="table table-bordered">
-							<tr><th>ID: </th><td><?php echo $this->result['id']; ?></td></tr>
                             <tr><th>LAW: </th><td><?php echo ucwords($this->law['law']); ?></td></tr>
                             <tr><th>Nature: </th><td><?php echo ucwords($this->nature['nature']); ?></td></tr>
                             <tr><th>Result: </th><td><?php echo ucwords($this->result['result']); ?></td></tr>

@@ -64,7 +64,7 @@
                 $("#id_nature").empty();
                 $('#id_result').empty();
 
-                // PARAM [title=1,section=2, nature=2]
+                // PARAM [title=1,section=2, nature=3]
                 //TITLE
                 $.ajax(
                     {

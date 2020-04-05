@@ -14,10 +14,12 @@ class result implements IController {
         $page               = (isset($_GET['p']) && !empty($_GET['p'])) ? $_GET['p'] : 1;
         $filter->from       = ($page - 1) * $filter->num;
         $view->from	    = $filter->from + 1;
-        $filter->seachLabel = "ID, Name";
+        $filter->seachLabel = "Name";
+        $law = $db->getNameValue("SELECT `id`,`law` as 'name' FROM `law`");
+        $nature = $db->getNameValue("SELECT `id`,`nature` as 'name' FROM `nature`");
         $filter->seperate_pagination = true;
         $filter->filters    = array(
-            "search"    => array("`id`","name"),
+            "search"    => array("result"),
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
                 "id:asc"     	=> "Oldest First",
@@ -28,6 +30,8 @@ class result implements IController {
         );
         $filter->select     = "SELECT * FROM result";
         $filter->order 			= "order by id desc";
+        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
+        $filter->filters['filters']['Select Nature'] = array("id_nature" => $nature);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
@@ -49,7 +53,7 @@ class result implements IController {
         $builder->links->edit		= SITEURL . "result/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"result"=>"Result");
+        $builder->columns 			=  array( "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"result"=>"Result");
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No record found. <a href='".SITEURL."result/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/result/list.php');
@@ -93,13 +97,10 @@ class result implements IController {
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"result_meta","id_result");
             // Tools::redirect();
         }
+
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];
-        foreach($getlaw as $law){
-            $lawdrop[$law['id']]=$law['law'];
-        }
-        $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
-        $lawdrop=[];
+        $lawdrop[0]="Select One";
         foreach($getlaw as $law){
             $lawdrop[$law['id']]=$law['law'];
         }

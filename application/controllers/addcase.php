@@ -15,6 +15,11 @@ class addcase implements IController {
         $filter->from       = ($page - 1) * $filter->num;
         $view->from	    = $filter->from + 1;
         $filter->seachLabel = "ID, Name";
+        $law = $db->getNameValue("SELECT `id`,`law` as 'name' FROM `law`");
+        $title = $db->getNameValue("SELECT `id`,`title` as 'name' FROM `title`");
+        $section = $db->getNameValue("SELECT `id`,`section` as 'name' FROM `section`");
+        $nature = $db->getNameValue("SELECT `id`,`nature` as 'name' FROM `nature`");
+        $result = $db->getNameValue("SELECT `id`,`result` as 'name' FROM `result`");
         $filter->seperate_pagination = true;
         $filter->filters    = array(
             "search"    => array("`id`","name"),
@@ -28,6 +33,11 @@ class addcase implements IController {
         );
         $filter->select     = "SELECT * FROM addcase";
         $filter->order 			= "order by id desc";
+        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
+        $filter->filters['filters']['Select Title'] = array("id_title" => $title);
+        $filter->filters['filters']['Select Section'] = array("id_section" => $section);
+        $filter->filters['filters']['Select Nature'] = array("id_nature" => $nature);
+        $filter->filters['filters']['Select Result'] = array("id_law" => $result);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
@@ -47,9 +57,9 @@ class addcase implements IController {
         $builder->log_title			= "addcase: ";
         $builder->links->view		= SITEURL."addcase/?action=detail";
         $builder->links->edit		= SITEURL . "addcase/?action=add";
-        $builder->actions 			= ["view","edit","delete"];
+        $builder->actions 			= ["view","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_title"=>["label"=>"Title", "function"=>"gettitlename"],"id_section"=>["label"=>"Section", "function"=>"getsectionname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"id_result"=>["label"=>"Result", "function"=>"getresultname"],"details"=>"Details", "date_added"=>["label"=>"Date", "function"=>"dateformat"]);
+        $builder->columns 			=  array( "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_title"=>["label"=>"Title", "function"=>"gettitlename"],"id_section"=>["label"=>"Section", "function"=>"getsectionname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"id_result"=>["label"=>"Result", "function"=>"getresultname"], "date_added"=>["label"=>"Date", "function"=>"dateformat"]);
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No record found. <a href='".SITEURL."addcase/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/addcase/list.php');
@@ -95,13 +105,10 @@ class addcase implements IController {
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"addcase_meta","id_addcase");
             // Tools::redirect();
         }
+
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];
-        foreach($getlaw as $law){
-            $lawdrop[$law['id']]=$law['law'];
-        }
-        $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
-        $lawdrop=[];
+        $lawdrop[0]="Select One";
         foreach($getlaw as $law){
             $lawdrop[$law['id']]=$law['law'];
         }

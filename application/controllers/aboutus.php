@@ -2,7 +2,6 @@
 class aboutus implements IController {
     public function main()
     {
-        /////
         $view = new View();
         $fc = FC::getInstance();
         $db = FC::getClass("Db");

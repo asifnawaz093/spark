@@ -14,10 +14,11 @@ class nature implements IController {
         $page               = (isset($_GET['p']) && !empty($_GET['p'])) ? $_GET['p'] : 1;
         $filter->from       = ($page - 1) * $filter->num;
         $view->from	    = $filter->from + 1;
-        $filter->seachLabel = "ID, Name";
+        $filter->seachLabel = "Name";
+        $law = $db->getNameValue("SELECT `id`,`law` as 'name' FROM `law`");
         $filter->seperate_pagination = true;
         $filter->filters    = array(
-            "search"    => array("`id`","name"),
+            "search"    => array("nature"),
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
                 "id:asc"     	=> "Oldest First",
@@ -28,6 +29,7 @@ class nature implements IController {
         );
         $filter->select     = "SELECT * FROM nature";
         $filter->order 			= "order by id desc";
+        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
@@ -49,7 +51,7 @@ class nature implements IController {
         $builder->links->edit		= SITEURL . "nature/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "nature"=>"nature", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
+        $builder->columns 			=  array("nature"=>"nature", "id_law"=>["label"=>"LAW", "function"=>"getlawname"],);
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No record found. <a href='".SITEURL."nature/?action=add' class='btn btn-primary'>Add New Nature</a>"; }
         $result 					= $view->render('../views/nature/list.php');

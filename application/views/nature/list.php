@@ -2,9 +2,9 @@
     <div id="menu-block"><?php FC::getInstance()->loadTemplate("sidebar"); ?></div>
     <div id="content-block">
 		<div class="breadcrumb clearfix">
-			<div class="pull-left textorange"><h3>Add nature</h3></div>
+			<div class="pull-left textorange"><h3>View Nature</h3></div>
 			<div class="pull-right">
-				<a href="<?php echo SITEURL . 'nature/?action=add'; ?>" class="btn btn-primary oc-button navlink">Add New nature</a>
+				<a href="<?php echo SITEURL . 'nature/?action=add'; ?>" class="btn btn-primary oc-button navlink">Add New Nature</a>
 				<a href="<?php echo SITEURL; ?>dashboard">Dashboard</a> / nature</div>
 			
 		</div>

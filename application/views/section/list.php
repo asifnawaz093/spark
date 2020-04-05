@@ -2,7 +2,7 @@
     <div id="menu-block"><?php FC::getInstance()->loadTemplate("sidebar"); ?></div>
     <div id="content-block">
 		<div class="breadcrumb clearfix">
-			<div class="pull-left textorange"><h3>Add Section</h3></div>
+			<div class="pull-left textorange"><h3>View Section</h3></div>
 			<div class="pull-right">
 				<a href="<?php echo SITEURL . 'section/?action=add'; ?>" class="btn btn-primary oc-button navlink">Add New Section</a>
 				<a href="<?php echo SITEURL; ?>dashboard">Dashboard</a> / section</div>

@@ -14,10 +14,10 @@ class law implements IController {
         $page               = (isset($_GET['p']) && !empty($_GET['p'])) ? $_GET['p'] : 1;
         $filter->from       = ($page - 1) * $filter->num;
         $view->from	    = $filter->from + 1;
-        $filter->seachLabel = "ID, Name";
+        $filter->seachLabel = "Name";
         $filter->seperate_pagination = true;
         $filter->filters    = array(
-            "search"    => array("`id`","name"),
+            "search"    => array("law"),
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
                 "id:asc"     	=> "Oldest First",
@@ -49,7 +49,7 @@ class law implements IController {
         $builder->links->edit		= SITEURL . "law/?action=add";
         $builder->actions 			= ["view","edit","delete"];
         $builder->auto 				= ["delete"];
-        $builder->columns 			=  array("id"=>"ID", "law"=>"LAW",);
+        $builder->columns 			=  array("law"=>"LAW",);
         $view->table 				= $builder->getTable($rows);
         if(!$rows){$fc->error = "No case found. <a href='".SITEURL."law/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/law/list.php');
