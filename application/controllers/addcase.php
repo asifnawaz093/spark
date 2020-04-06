@@ -22,6 +22,7 @@ class addcase implements IController {
         $result = $db->getNameValue("SELECT `id`,`result` as 'name' FROM `result`");
         $filter->seperate_pagination = true;
 
+
         $filter->filters    = array(
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
