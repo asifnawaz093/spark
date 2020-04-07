@@ -38,7 +38,7 @@
                 $("#id_result").removeClass("nodisplay");
                 $.ajax(
                     {
-                        url: "<?php echo SITEURL; ?>addcase/?action=getresultlist&id_law=" + $("#id_law").val() + "&id_nature=" + $("#id_nature").val(),
+                        url: "<?php echo SITEURL; ?>addcase/?action=getresultlist&filter=1&id_law=" + $("#id_law").val() + "&id_nature=" + $("#id_nature").val(),
                         dataType: "html",
                         type: "get",
                         success: function (data) {
@@ -71,7 +71,7 @@
                 //TITLE
                 $.ajax(
                     {
-                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=1&value=" + $("#id_law").val(),
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=1&filter=1&value=" + $("#id_law").val(),
                         dataType: "html",
                         type: "get",
                         success: function (data) {
@@ -88,7 +88,7 @@
                 // SECTIONS
                 $.ajax(
                     {
-                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=2&value=" + $("#id_law").val(),
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=2&filter=1&value=" + $("#id_law").val(),
                         dataType: "html",
                         type: "get",
                         success: function (data) {
@@ -104,7 +104,7 @@
                 // NATURE
                 $.ajax(
                     {
-                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=3&value=" + $("#id_law").val(),
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=3&filter=1&value=" + $("#id_law").val(),
                         dataType: "html",
                         type: "get",
                         success: function (data) {

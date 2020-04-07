@@ -26,10 +26,10 @@ class addcase implements IController {
             ),
             "filters"   => array(
                 "Select Law"		=> array("id_law" => $law, "field_id"=>"id_law", "field_attributes"=>"onchange=filterField()") ,
-                "Select Title"      =>array("id_title"=>[], "field_id"=>"id_title"),
-                "Select Section"    =>array("id_section"=>[], "field_id"=>"id_section"),
-                "Select Nature"      =>array("id_nature"=>[], "field_id"=>"id_nature", "field_attributes"=>"onchange=filterFieldsub()"),
-                "Select Result"      =>array("id_result"=>[], "field_id"=>"id_result"),
+                "Titles"      =>array("id_title"=>[], "field_id"=>"id_title"),
+                "Sections"    =>array("id_section"=>[], "field_id"=>"id_section"),
+                "Nature"      =>array("id_nature"=>[], "field_id"=>"id_nature", "field_attributes"=>"onchange=filterFieldsub()"),
+                "Results"      =>array("id_result"=>[], "field_id"=>"id_result"),
             ),
             "pagination"	=> array("pageLink"=>SITEURL."addcase/"),
         );
@@ -153,11 +153,13 @@ class addcase implements IController {
         $db = FC::getClass("Db");
         $id_law = Tools::getValue("id_law");
         $id_nature = Tools::getValue("id_nature");
+        $filter=Tools::getValue('filter');
         if($id_law && $id_nature) {
             $data = $db->getNameValue("SELECT `id`,  `result` as 'name' FROM `result` WHERE `id_law`= '$id_law' AND `id_nature`='$id_nature' ","id","name");
 
             if ($data) {
-                echo "<option value=''>Select one</option>";
+                if(!$filter) echo "<option value=''>Select one</option>"; else echo "<option value=''>Results</option>" ;
+
                 foreach ($data as $id => $name) {
                     echo "<option value='{$id}'>$name</option>";
                 }
@@ -171,19 +173,23 @@ class addcase implements IController {
         $db = FC::getClass("Db");
         $value = Tools::getValue("value");
         $param=Tools::getValue('param');
+        $filter=Tools::getValue('filter');
 
         if($value) {
             if($param==1){
                 $data = $db->getNameValue("SELECT `id`,  `title` as 'name' FROM `title` WHERE `id_law`= '$value'","id","name");
+                if($filter) echo "<option value=''>Titles</option>";
             }
             else if($param==2){
                     $data = $db->getNameValue("SELECT `id`,  `section` as 'name' FROM `section` WHERE `id_law`= '$value'","id","name");
+                if($filter) echo "<option value=''>Sections</option>";
                 }else if($param==3){
                 $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_law`= '$value'","id","name");
+                if($filter) echo "<option value=''>Nature</option>";
             }
 
             if ($data) {
-                echo "<option value=''>Select one</option>";
+                if(!$filter) echo "<option value=''>Select one</option>";
                 foreach ($data as $id => $name) {
                     echo "<option value='{$id}'>$name</option>";
                 }
