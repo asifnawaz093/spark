@@ -11,7 +11,15 @@
 		<div id="contents">
 		  <?php FC::getInstance()->loadTemplate("alerts"); ?>
 		  <div class="bgwhite padding minheight">
-			<?php
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="loading" id="loading">
+
+                      </div>
+                  </div>
+
+              </div>
+              <?php
 				echo $this->filter; 
 				echo $this->table;
 				echo $this->pagination;
@@ -20,3 +28,98 @@
 		</div>
     </div>
 </div>
+<script>
+
+    function filterFieldsub()
+    {
+        $("#loading").html("<div class='alert alert-info'>Loading, Please Wait.. " +loader+ "</div>");
+        $( document ).ready(function() {
+            if ($("#id_law").val() && $("#id_nature").val()) {
+                $("#id_result").removeClass("nodisplay");
+                $.ajax(
+                    {
+                        url: "<?php echo SITEURL; ?>addcase/?action=getresultlist&id_law=" + $("#id_law").val() + "&id_nature=" + $("#id_nature").val(),
+                        dataType: "html",
+                        type: "get",
+                        success: function (data) {
+                            if (data) {
+                                $("#id_result").html(data);
+                                $("#loading").html("");
+                            }
+                        },
+                        error: function (data) {
+                            alert("System error, please refresh page or try again.");
+                        }
+                    });
+            }
+        });
+    }
+    function filterField()
+    {
+        $("#loading").html("<div class='alert alert-info'>Loading, Please Wait.. " +loader+ "</div>");
+        $( document ).ready(function() {
+            if($("#id_law").val()) {
+                $("#id_title").removeClass("nodisplay");
+                $("#id_section").removeClass("nodisplay");
+                $("#id_nature").removeClass("nodisplay");
+                $("#id_title").empty();
+                $("#id_section").empty();
+                $("#id_nature").empty();
+                $('#id_result').empty();
+
+                // PARAM [title=1,section=2, nature=3]
+                //TITLE
+                $.ajax(
+                    {
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=1&value=" + $("#id_law").val(),
+                        dataType: "html",
+                        type: "get",
+                        success: function (data) {
+                            if(data){
+                                $("#id_title").html(data);
+                                $("#loading").html("");
+                            }
+                        },
+                        error: function (data) {
+                            alert("System error, please refresh page or try again.");
+                        }
+                    });
+
+                // SECTIONS
+                $.ajax(
+                    {
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=2&value=" + $("#id_law").val(),
+                        dataType: "html",
+                        type: "get",
+                        success: function (data) {
+                            if(data){
+                                $("#id_section").html(data);
+                                $("#loading").html("");
+                            }
+                        },
+                        error: function (data) {
+                            alert("System error, please refresh page or try again.");
+                        }
+                    });
+                // NATURE
+                $.ajax(
+                    {
+                        url: "<?php echo SITEURL; ?>addcase/?action=getdata&param=3&value=" + $("#id_law").val(),
+                        dataType: "html",
+                        type: "get",
+                        success: function (data) {
+                            if(data){
+                                $("#id_nature").html(data);
+                                $("#loading").html("");
+                            }
+                        },
+                        error: function (data) {
+                            alert("System error, please refresh page or try again.");
+                        }
+                    });
+
+            }
+        });
+
+    }
+</script>

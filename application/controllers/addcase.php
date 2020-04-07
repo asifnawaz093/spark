@@ -16,13 +16,7 @@ class addcase implements IController {
         $view->from	    = $filter->from + 1;
         $filter->seachLabel = "ID, Name";
         $law = $db->getNameValue("SELECT `id`,`law` as 'name' FROM `law`");
-        $title = $db->getNameValue("SELECT `id`,`title` as 'name' FROM `title`");
-        $section = $db->getNameValue("SELECT `id`,`section` as 'name' FROM `section`");
-        $nature = $db->getNameValue("SELECT `id`,`nature` as 'name' FROM `nature`");
-        $result = $db->getNameValue("SELECT `id`,`result` as 'name' FROM `result`");
         $filter->seperate_pagination = true;
-
-
         $filter->filters    = array(
             "sort"      => array(
                 "id:desc"    	=> "Latest First",
@@ -30,15 +24,17 @@ class addcase implements IController {
                 "name:asc" 	=> "Name (A-Z)",
                 "name:desc" => "Name (Z-A)",
             ),
-            "pagination"	=> array("pageLink"=>SITEURL."addcase/")
+            "filters"   => array(
+                "Select Law"		=> array("id_law" => $law, "field_id"=>"id_law", "field_attributes"=>"onchange=filterField()") ,
+                "Select Title"      =>array("id_title"=>[], "field_id"=>"id_title"),
+                "Select Section"    =>array("id_section"=>[], "field_id"=>"id_section"),
+                "Select Nature"      =>array("id_nature"=>[], "field_id"=>"id_nature", "field_attributes"=>"onchange=filterFieldsub()"),
+                "Select Result"      =>array("id_result"=>[], "field_id"=>"id_result"),
+            ),
+            "pagination"	=> array("pageLink"=>SITEURL."addcase/"),
         );
         $filter->select     = "SELECT * FROM addcase";
         $filter->order 			= "order by id desc";
-        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
-        $filter->filters['filters']['Select Title'] = array("id_title" => $title);
-        $filter->filters['filters']['Select Section'] = array("id_section" => $section);
-        $filter->filters['filters']['Select Nature'] = array("id_nature" => $nature);
-        $filter->filters['filters']['Select Result'] = array("id_law" => $result);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
