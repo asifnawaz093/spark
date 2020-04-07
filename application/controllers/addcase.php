@@ -94,13 +94,13 @@ class addcase implements IController {
                 }
             }else{
                 if($id = $db->insert(array("addcase"=>$data))){
-                    $fc->success = "New addcase created successfully"; FC::getClass("Log")->add("New addcase information created. addcase ID: $id");
+                    $fc->success = "New Case Registered Successfully"; FC::getClass("Log")->add("New addcase information created. addcase ID: $id");
                 }else{
                     $fc->error = "Some error occured.";
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"addcase_meta","id_addcase");
-            // Tools::redirect();
+             Tools::redirect('addcase');
         }
 
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");

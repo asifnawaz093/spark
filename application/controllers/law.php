@@ -89,7 +89,7 @@ class law implements IController {
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"law_meta","id_law");
-            // Tools::redirect();
+            Tools::redirect('law');
         }
         $builder->form_attribute = "enctype='multipart/form-data'";
         $builder->form_fields = array(

@@ -91,7 +91,7 @@ class title implements IController {
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"title_meta","id_title");
-            // Tools::redirect();
+            Tools::redirect('title');
         }
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];

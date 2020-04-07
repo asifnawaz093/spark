@@ -91,7 +91,7 @@ class section implements IController {
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"section_meta","id_section");
-            // Tools::redirect();
+            Tools::redirect('section');
         }
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];

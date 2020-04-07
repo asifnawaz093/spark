@@ -95,7 +95,7 @@ class result implements IController {
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"result_meta","id_result");
-            // Tools::redirect();
+            Tools::redirect('result');
         }
 
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");

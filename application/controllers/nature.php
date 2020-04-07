@@ -92,7 +92,7 @@ class nature implements IController {
                 }
             }
             FC::getClass("Settings")->saveCustomFormFields($custom_meta,$id,"nature_meta","id_nature");
-            // Tools::redirect();
+            Tools::redirect('nature');
         }
         $getlaw=$db->getRows("SELECT `id`, `law` FROM `law`");
         $lawdrop=[];
