@@ -21,6 +21,7 @@
 <script>
     function getnaturelist()
     {
+
         if($("#id_law").val()) {
             $("#id_nature").removeClass("nodisplay");
             $.ajax(

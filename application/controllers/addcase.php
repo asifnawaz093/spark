@@ -33,6 +33,7 @@ class addcase implements IController {
             ),
             "pagination"	=> array("pageLink"=>SITEURL."addcase/"),
         );
+
         $filter->select     = "SELECT * FROM addcase";
         $filter->order 			= "order by id desc";
         $view->filter       	= $filter->createFilter();

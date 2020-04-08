@@ -167,8 +167,6 @@ class result implements IController {
         $filter=Tools::getValue('filter');
         if($value) {
             $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_law`= '$value'","id","name");
-
-
             if ($data) {
                 if($filter){
                     echo "<option value=''>Nature</option>";
