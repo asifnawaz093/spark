@@ -11,16 +11,7 @@
 ?>
 <li class="menu-item about"><a href="<?php echo SITEURL; ?>aboutus" target="_blank">About Us</a></li>
      <?php if(!$session->isLoggedIn()){ ?>
-     <li class="menu-item login">
-	     <a href="<?php echo SITEURL; ?>signup/" class="item_link  with_icon">
-		     <i class="glyphicon glyphicon-user"></i> 
-		     <span class="link_content">
-			     <span class="link_text textbold">
-				Register
-			     </span>
-		     </span>
-	     </a>
-     </li>
+
      <li class="menu-item login">
 	     <a href="<?php echo SITEURL; ?>login" class="item_link  with_icon">
 		     <i class="glyphicon glyphicon-log-in"></i> 

@@ -32,7 +32,6 @@
 
     function filterFieldsub()
     {
-        $("#loading").html("<div class='alert alert-info'>Loading, Please Wait.. " +loader+ "</div>");
         $( document ).ready(function() {
             if ($("#id_law").val() && $("#id_nature").val()) {
                 $("#id_result").removeClass("nodisplay");
@@ -44,7 +43,6 @@
                         success: function (data) {
                             if (data) {
                                 $("#id_result").html(data);
-                                $("#loading").html("");
                             }
                         },
                         error: function (data) {
@@ -56,7 +54,6 @@
     }
     function filterField()
     {
-        $("#loading").html("<div class='alert alert-info'>Loading, Please Wait.. " +loader+ "</div>");
         $( document ).ready(function() {
             if($("#id_law").val()) {
                 $("#id_title").removeClass("nodisplay");
@@ -65,7 +62,7 @@
                 $("#id_title").empty();
                 $("#id_section").empty();
                 $("#id_nature").empty();
-                $('#id_result').empty();
+                //$('#id_result').empty();
 
                 // PARAM [title=1,section=2, nature=3]
                 //TITLE
@@ -77,7 +74,6 @@
                         success: function (data) {
                             if(data){
                                 $("#id_title").html(data);
-                                $("#loading").html("");
                             }
                         },
                         error: function (data) {
@@ -94,7 +90,7 @@
                         success: function (data) {
                             if(data){
                                 $("#id_section").html(data);
-                                $("#loading").html("");
+
                             }
                         },
                         error: function (data) {
@@ -110,7 +106,6 @@
                         success: function (data) {
                             if(data){
                                 $("#id_nature").html(data);
-                                $("#loading").html("");
                             }
                         },
                         error: function (data) {

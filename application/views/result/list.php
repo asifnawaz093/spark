@@ -20,3 +20,26 @@
 		</div>
     </div>
 </div>
+<script>
+    function filterField()
+    {
+        if($("#id_law").val()) {
+            $("#id_nature").removeClass("nodisplay");
+            $.ajax(
+                {
+                    url: "<?php echo SITEURL; ?>result/?action=getnaturelist&filter=1&value=" + $("#id_law").val(),
+                    dataType: "html",
+                    type: "get",
+                    success: function (data) {
+                        if(data){
+                            $("#id_nature").html(data);
+                        }
+                    },
+                    error: function (data) {
+                        alert("System error, please refresh page or try again.");
+                    }
+                });
+        }
+    }
+
+</script>

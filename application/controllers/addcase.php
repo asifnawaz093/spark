@@ -38,6 +38,8 @@ class addcase implements IController {
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
+       // echo $query;
+//        exit();
         $rows 					= $db->getRows($query);
         $builder					= FC::getClass("Builder");
         $builder->table				= "addcase";
@@ -57,7 +59,10 @@ class addcase implements IController {
         $builder->actions 			= ["view","delete"];
         $builder->auto 				= ["delete"];
         $builder->columns 			=  array( "id_law"=>["label"=>"LAW", "function"=>"getlawname"],"id_title"=>["label"=>"Title", "function"=>"gettitlename"],"id_section"=>["label"=>"Section", "function"=>"getsectionname"],"id_nature"=>["label"=>"Nature", "function"=>"getnaturename"],"id_result"=>["label"=>"Result", "function"=>"getresultname"], "date_added"=>["label"=>"Date", "function"=>"dateformat"]);
-        $view->table 				= $builder->getTable($rows);
+        if($rows){
+            $view->table 				= $builder->getTable($rows);
+        }
+
         if(!$rows){$fc->error = "No record found. <a href='".SITEURL."addcase/?action=add' class='btn btn-primary'>Add New case</a>"; }
         $result 					= $view->render('../views/addcase/list.php');
         $fc->setBody($result);

@@ -26,12 +26,17 @@ class result implements IController {
                 "name:asc" 	=> "Name (A-Z)",
                 "name:desc" => "Name (Z-A)",
             ),
+            "filters"   => array(
+                "Select Law"		=> array("id_law" => $law, "field_id"=>"id_law", "field_attributes"=>"onchange=filterField()") ,
+                "Nature"      =>array("id_nature"=>[], "field_id"=>"id_nature",),
+            ),
             "pagination"	=> array("pageLink"=>SITEURL."result/")
         );
         $filter->select     = "SELECT * FROM result";
         $filter->order 			= "order by id desc";
-        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
-        $filter->filters['filters']['Select Nature'] = array("id_nature" => $nature);
+
+//        $filter->filters['filters']['Select LAW'] = array("id_law" => $law);
+//        $filter->filters['filters']['Select Nature'] = array("id_nature" => $nature);
         $view->filter       	= $filter->createFilter();
         $view->pagination   	= $filter->pagination;
         $query              	= $filter->getQuery();
@@ -159,11 +164,17 @@ class result implements IController {
     {
         $db = FC::getClass("Db");
         $value = Tools::getValue("value");
+        $filter=Tools::getValue('filter');
         if($value) {
             $data = $db->getNameValue("SELECT `id`,  `nature` as 'name' FROM `nature` WHERE `id_law`= '$value'","id","name");
 
             if ($data) {
-                echo "<option value=''>Select one</option>";
+                if($filter){
+                    echo "<option value=''>Nature</option>";
+                }else{
+                    echo "<option value=''>Select one</option>";
+                }
+
                 foreach ($data as $id => $name) {
                     echo "<option value='{$id}'>$name</option>";
                 }
