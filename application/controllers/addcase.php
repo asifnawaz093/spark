@@ -170,7 +170,6 @@ class addcase implements IController {
                     echo "<option value='{$id}'>$name</option>";
                 }
             }else{
-                echo "<option>No Data</option>";
             }
         }
     }
@@ -200,7 +199,7 @@ class addcase implements IController {
                     echo "<option value='{$id}'>$name</option>";
                 }
             }else{
-                echo "<option>No Data</option>";
+
             }
         }
     }

@@ -29,7 +29,12 @@
     </div>
 </div>
 <script>
-
+  window.onload=onloading();
+//  window.onload=filterFieldsub();
+        function onloading(){
+            filterField();
+            filterFieldsub();
+        }
     function filterFieldsub()
     {
         $( document ).ready(function() {
@@ -62,8 +67,7 @@
                 $("#id_title").empty();
                 $("#id_section").empty();
                 $("#id_nature").empty();
-                //$('#id_result').empty();
-
+               // $('#id_result').empty();
 
                 // PARAM [title=1,section=2, nature=3]
                 //TITLE
